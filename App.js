@@ -4,6 +4,8 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import LoginScreen from './App/Screen/LoginScreen';
+import { ClerkProvider } from '@clerk/clerk-expo';
+import { SignedIn, SignedOut } from '@clerk/clerk-react';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,10 +27,17 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <LoginScreen />
-      <StatusBar style="auto" />
-    </View>
+    <ClerkProvider publishableKey="pk_test_YWxlcnQtbXVsZS0zNi5jbGVyay5hY2NvdW50cy5kZXYk">
+      <View style={styles.container} onLayout={onLayoutRootView}>
+        <SignedIn>
+          <Text>로그인 되었음.</Text>
+        </SignedIn>
+        <SignedOut>
+          <LoginScreen />
+        </SignedOut>
+        <StatusBar style="auto" />
+      </View>
+    </ClerkProvider>
   );
 }
 
