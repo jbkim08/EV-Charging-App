@@ -1,8 +1,8 @@
 import { Image, StyleSheet, View } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import MapStyle from '../Utils/MapViewStyle.json';
+import MapStyle from '../../Utils/MapViewStyle.json';
 import { useContext } from 'react';
-import { UserLocationContext } from '../Context/UserLocationContext';
+import { UserLocationContext } from '../../Context/UserLocationContext';
 
 export default function AppMapView() {
   const { location, setLocation } = useContext(UserLocationContext);
@@ -26,7 +26,7 @@ export default function AppMapView() {
           }}
         >
           <Image
-            source={require('./../../assets/images/car.png')}
+            source={require('./../../../assets/images/car.png')}
             style={{ width: 35, height: 35 }}
           />
         </Marker>
