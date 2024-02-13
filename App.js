@@ -8,6 +8,7 @@ import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
 import TabNavigation from './App/Navigations/TabNavigation';
 import * as Location from 'expo-location';
+import { UserLocationContext } from './App/Context/UserLocationContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -76,16 +77,18 @@ export default function App() {
       tokenCache={tokenCache}
       publishableKey="pk_test_YWxlcnQtbXVsZS0zNi5jbGVyay5hY2NvdW50cy5kZXYk"
     >
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <SignedIn>
-          <TabNavigation />
-        </SignedIn>
-        <SignedOut>
-          <LoginScreen />
-        </SignedOut>
+      <UserLocationContext.Provider value={{ location, setLocation }}>
+        <View style={styles.container} onLayout={onLayoutRootView}>
+          <SignedIn>
+            <TabNavigation />
+          </SignedIn>
+          <SignedOut>
+            <LoginScreen />
+          </SignedOut>
 
-        <StatusBar style="auto" />
-      </View>
+          <StatusBar style="auto" />
+        </View>
+      </UserLocationContext.Provider>
     </ClerkProvider>
   );
 }
