@@ -8,9 +8,9 @@ export default function SearchBar() {
     <View>
       <GooglePlacesAutocomplete
         placeholder="Search"
+        fetchDetails={true}
         onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
-          console.log(data, details);
+          console.log(details?.geometry?.location);
         }}
         query={{
           key: apiKey,
