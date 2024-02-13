@@ -1,5 +1,5 @@
-import { StyleSheet, View } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { Image, StyleSheet, View } from 'react-native';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapStyle from '../Utils/MapViewStyle.json';
 import { useContext } from 'react';
 import { UserLocationContext } from '../Context/UserLocationContext';
@@ -11,7 +11,6 @@ export default function AppMapView() {
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        showsUserLocation={true}
         customMapStyle={MapStyle}
         region={{
           latitude: location?.latitude,
@@ -19,7 +18,19 @@ export default function AppMapView() {
           latitudeDelta: 0.0422,
           longitudeDelta: 0.0421,
         }}
-      />
+      >
+        <Marker
+          coordinate={{
+            latitude: location?.latitude,
+            longitude: location?.longitude,
+          }}
+        >
+          <Image
+            source={require('./../../assets/images/car.png')}
+            style={{ width: 35, height: 35 }}
+          />
+        </Marker>
+      </MapView>
     </View>
   );
 }
