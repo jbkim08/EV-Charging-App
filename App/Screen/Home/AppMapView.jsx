@@ -39,7 +39,12 @@ export default function AppMapView({ placeList }) {
                   latitude: item.location?.latitude,
                   longitude: item.location?.longitude,
                 }}
-              ></Marker>
+              >
+                <Image
+                  source={require('./../../../assets/images/marker.png')}
+                  style={{ width: 25, height: 30 }}
+                />
+              </Marker>
             );
           })}
       </MapView>
