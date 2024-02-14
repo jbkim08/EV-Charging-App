@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Keyboard } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import AppMapView from './AppMapView';
 import Header from './Header';
@@ -11,6 +11,9 @@ export default function HomeScreen() {
   //사용자의 위치를 컨텍스트에서 가져옴
   const { location, setLocation } = useContext(UserLocationContext);
   const [placeList, setPlaceList] = useState([]);
+  const [show, setShow] = useState(true);
+  Keyboard.addListener('keyboardDidShow', () => setShow(false));
+  Keyboard.addListener('keyboardDidHide', () => setShow(true));
   useEffect(() => {
     location && GetNearByPlace();
   }, [location]);
@@ -42,7 +45,7 @@ export default function HomeScreen() {
       </View>
       {placeList && <AppMapView placeList={placeList} />}
       <View style={styles.placeListContainer}>
-        <PlaceListView placeList={placeList} />
+        {show && <PlaceListView placeList={placeList} />}
       </View>
     </View>
   );
