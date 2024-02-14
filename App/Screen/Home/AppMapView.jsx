@@ -4,7 +4,7 @@ import MapStyle from '../../Utils/MapViewStyle.json';
 import { useContext } from 'react';
 import { UserLocationContext } from '../../Context/UserLocationContext';
 
-export default function AppMapView() {
+export default function AppMapView({ placeList }) {
   const { location, setLocation } = useContext(UserLocationContext);
   return (
     <View>
@@ -30,6 +30,18 @@ export default function AppMapView() {
             style={{ width: 35, height: 35 }}
           />
         </Marker>
+        {placeList &&
+          placeList.map((item, index) => {
+            return (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: item.location?.latitude,
+                  longitude: item.location?.longitude,
+                }}
+              ></Marker>
+            );
+          })}
       </MapView>
     </View>
   );
