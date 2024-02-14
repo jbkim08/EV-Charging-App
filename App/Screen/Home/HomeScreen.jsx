@@ -1,14 +1,16 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppMapView from './AppMapView';
 import Header from './Header';
 import SearchBar from './SearchBar';
 import GlobalApi from '../../Utils/GlobalApi';
 import { UserLocationContext } from '../../Context/UserLocationContext';
+import PlaceListView from './PlaceListView';
 
 export default function HomeScreen() {
   //사용자의 위치를 컨텍스트에서 가져옴
   const { location, setLocation } = useContext(UserLocationContext);
+  const [placeList, setPlaceList] = useState([]);
   useEffect(() => {
     location && GetNearByPlace();
   }, [location]);
@@ -28,7 +30,7 @@ export default function HomeScreen() {
     };
 
     GlobalApi.NewNearByPlace(data).then((resp) => {
-      console.log(JSON.stringify(resp.data));
+      setPlaceList(resp.data?.places);
     });
   };
 
@@ -39,6 +41,9 @@ export default function HomeScreen() {
         <SearchBar searchedLocation={(location) => console.log(location)} />
       </View>
       <AppMapView />
+      <View style={styles.placeListContainer}>
+        <PlaceListView placeList={placeList} />
+      </View>
     </View>
   );
 }
@@ -49,5 +54,11 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '90%',
     zIndex: 10,
+  },
+  placeListContainer: {
+    position: 'absolute',
+    bottom: 0,
+    zIndex: 10,
+    width: '100%',
   },
 });
